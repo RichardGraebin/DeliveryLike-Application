@@ -1,5 +1,9 @@
+let pizzaQnt = 1
+
 const qs = (obj)=>document.querySelector(obj)                                 // Diminuir o código abreviando o QuerySelector pra uma var
-const qsa = (obj)=>document.querySelectorAll(obj)                             // Mesma coisa porém com o QuerySelectorAll
+const qsa = (obj)=>document.querySelectorAll(obj)
+
+// Informações do Menu de Tamanhos e Quantidades
 
 pizzaJson.map((pizza, numero)=>{                                              // Usar o map pra fazer a mesma coisa com todos os modelos de pizza
     let pizzaItem = qs('.models .pizza-item').cloneNode(true)                 // CloneNode(true) pra criar um pizza-item pra cada modelo no pizzaJson
@@ -15,7 +19,8 @@ pizzaJson.map((pizza, numero)=>{                                              //
 
         e.preventDefault()                                                    // Previne que o evento base seja redirecionamento de página
         let key = e.target.closest(".pizza-item").getAttribute('data-key')    // Adiciona à variavel key, a chave da pizza clicada
-        
+        pizzaQnt = 1
+
         qs('.pizzaInfo h1').innerHTML = pizzaJson[key].name                   // Coloca as informações da pizza selecionada (com base na chave) ao menu de tamanhos 
         qs('.pizzaInfo--desc').innerHTML = pizzaJson[key].description
         qs('.pizzaBig img').setAttribute('src', pizzaJson[key].img)
@@ -29,11 +34,16 @@ pizzaJson.map((pizza, numero)=>{                                              //
             size.querySelector('span').innerHTML = pizzaJson[key].sizes[sizeIndex]         // Junto do ForEach, usa o sizeIndex para selecionar os tamanhos adequados 
         })
 
+        qs('.pizzaInfo--qt').InnerHTML = pizzaQnt
+
         qs('.pizzaWindowArea').style.opacity = 0                              // Gera uma animação no menu de tamanhos deixando a opacidade no zero
         qs('.pizzaWindowArea').style.display = 'flex'
-        setTimeout(()=> qs('.pizzaWindowArea').style.opacity = 1, 100);       // Leva a opacidade de 0 a 1 em 200 milisegundos, criando a animação
+        setTimeout(()=> qs('.pizzaWindowArea').style.opacity = 1, 100);       // Leva a opacidade de 0 a 1 em 100 milisegundos, criando a animação
 
     })
 
     qs('.pizza-area').append (pizzaItem)                                      // Adiciona todos os modelos criados, com suas informações, na class .pizza-area
 })
+
+// Eventos do Menu de Tamanhos e Quantidades
+
