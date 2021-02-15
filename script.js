@@ -1,7 +1,7 @@
-const qs = (obj)=>document.querySelector(obj)
-const qsa = (obj)=>document.querySelectorAll(obj)
+const qs = (obj)=>document.querySelector(obj)                                 // Diminuir o código abreviando o QuerySelector pra uma var
+const qsa = (obj)=>document.querySelectorAll(obj)                             // Mesma coisa porém com o QuerySelectorAll
 
-pizzaJson.map((pizza, numero)=>{
+pizzaJson.map((pizza, numero)=>{                                              // Usar o map pra fazer a mesma coisa com todos os modelos de pizza
     let pizzaItem = qs('.models .pizza-item').cloneNode(true)
     const pI = (obj)=>pizzaItem.querySelector(obj)
     
