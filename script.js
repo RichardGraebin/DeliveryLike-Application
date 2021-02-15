@@ -47,8 +47,8 @@ pizzaJson.map((pizza, numero)=>{                                              //
 
 // Eventos do Menu de Tamanhos e Quantidades
 
-function closeMenuQT() {
-    qs('.pizzaWindowArea').style.opacity = 0
-    setTimeout(() => {qs('.pizzaWindowArea').style.display = 'none'}, 100);
+function closeMenuQT() {                                                      // Função para fechar o menu
+    qs('.pizzaWindowArea').style.opacity = 0                                  // Animação de fechamento
+    setTimeout(() => {qs('.pizzaWindowArea').style.display = 'none'}, 100);   // Tira da tela o menu mesmo que invisivel
 }
 
