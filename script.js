@@ -20,10 +20,18 @@ pizzaJson.map((pizza, numero)=>{                                              //
         qs('.pizzaInfo--desc').innerHTML = pizzaJson[key].description
         qs('.pizzaBig img').setAttribute('src', pizzaJson[key].img)
         qs('.pizzaInfo--actualPrice').innerHTML = `R$ ${pizzaJson[key].price.toFixed(2)}`
+        qs('.pizzaInfo--size.selected').classList.remove('selected')
+        qsa('.pizzaInfo--size').forEach((size, sizeIndex)=>{                               // Seleciona todas as classes de tamanho e aplica um forEach
+            if(sizeIndex == 2) {
+                size.classList.add('selected')
+            }
+            
+            size.querySelector('span').innerHTML = pizzaJson[key].sizes[sizeIndex]         // Junto do ForEach, usa o sizeIndex para selecionar os tamanhos adequados 
+        })
 
         qs('.pizzaWindowArea').style.opacity = 0                              // Gera uma animação no menu de tamanhos deixando a opacidade no zero
         qs('.pizzaWindowArea').style.display = 'flex'
-        setTimeout(()=> qs('.pizzaWindowArea').style.opacity = 1, 200);       // Leva a opacidade de 0 a 1 em 200 milisegundos, criando a animação
+        setTimeout(()=> qs('.pizzaWindowArea').style.opacity = 1, 100);       // Leva a opacidade de 0 a 1 em 200 milisegundos, criando a animação
 
     })
 

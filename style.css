@@ -360,7 +360,7 @@ h1 {
         right:0;
         top:0;
         bottom:0;
-        transition: all ease .2s;
+        transition: all ease .1s;
     }
     aside.show {
         width:auto;
