@@ -1,4 +1,6 @@
+let carrinho = []
 let pizzaQnt = 1
+let pizzaKey = 0
 
 const qs = (obj)=>document.querySelector(obj)                                 // Diminuir o código abreviando o QuerySelector pra uma var
 const qsa = (obj)=>document.querySelectorAll(obj)
@@ -19,6 +21,7 @@ pizzaJson.map((pizza, numero)=>{                                              //
 
         e.preventDefault()                                                    // Previne que o evento base seja redirecionamento de página
         let key = e.target.closest(".pizza-item").getAttribute('data-key')    // Adiciona à variavel key, a chave da pizza clicada
+        pizzaKey = key
         pizzaQnt = 1
 
         qs('.pizzaInfo h1').innerHTML = pizzaJson[key].name                   // Coloca as informações da pizza selecionada (com base na chave) ao menu de tamanhos 
@@ -73,4 +76,10 @@ qsa('.pizzaInfo--size').forEach((size) => {
         qs('.pizzaInfo--size.selected').classList.remove('selected')
         size.classList.add('selected')
     })
+})
+
+qs('.pizzaInfo--addButton').addEventListener('click', ()=>{
+    // Qual pizza?           console.log(pizzaKey)
+    // Qual o tamanho?       let pizzaSize = parseInt(qs('.pizzaInfo--size.selected').getAttribute('data-key'))
+    // Qual a quantidade?    console.log(pizzaQnt)
 })
