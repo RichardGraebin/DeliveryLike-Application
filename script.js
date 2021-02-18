@@ -34,7 +34,7 @@ pizzaJson.map((pizza, numero)=>{                                              //
             size.querySelector('span').innerHTML = pizzaJson[key].sizes[sizeIndex]         // Junto do ForEach, usa o sizeIndex para selecionar os tamanhos adequados 
         })
 
-        qs('.pizzaInfo--qt').InnerHTML = pizzaQnt
+        qs('.pizzaInfo--qt').innerHTML = pizzaQnt
 
         qs('.pizzaWindowArea').style.opacity = 0                              // Gera uma animação no menu de tamanhos deixando a opacidade no zero
         qs('.pizzaWindowArea').style.display = 'flex'
@@ -56,3 +56,21 @@ qsa('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item)=>
     item.addEventListener('click', closeMenuQT)                                            // Se adiciona o evento de clique, onde executa a função closeMenuQT
 })
 
+qs('.pizzaInfo--qtmenos').addEventListener('click', ()=>{
+    if (pizzaQnt > 1) {
+        pizzaQnt--
+        qs('.pizzaInfo--qt').innerHTML = pizzaQnt
+    }
+})
+
+qs('.pizzaInfo--qtmais').addEventListener('click', ()=>{
+    pizzaQnt++
+    qs('.pizzaInfo--qt').innerHTML = pizzaQnt
+})
+
+qsa('.pizzaInfo--size').forEach((size) => {
+    size.addEventListener('click', (e)=>{
+        qs('.pizzaInfo--size.selected').classList.remove('selected')
+        size.classList.add('selected')
+    })
+})
