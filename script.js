@@ -49,6 +49,10 @@ pizzaJson.map((pizza, numero)=>{                                              //
 
 function closeMenuQT() {                                                      // Função para fechar o menu
     qs('.pizzaWindowArea').style.opacity = 0                                  // Animação de fechamento
-    setTimeout(() => {qs('.pizzaWindowArea').style.display = 'none'}, 100);   // Tira da tela o menu mesmo que invisivel
+    setTimeout(() => {qs('.pizzaWindowArea').style.display = 'none'}, 100);   // Fecha o menu
 }
+
+qsa('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item)=>{          // Para cada botao de cancelar
+    item.addEventListener('click', closeMenuQT)                                            // Se adiciona o evento de clique, onde executa a função closeMenuQT
+})
 
