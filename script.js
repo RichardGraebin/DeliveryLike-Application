@@ -2,7 +2,7 @@ let carrinho = []
 let pizzaQnt = 1
 let pizzaKey = 0
 
-const qs = (obj)=>document.querySelector(obj)                                 // Diminuir o código abreviando o QuerySelector pra uma var
+const qs = (obj)=>document.querySelector(obj)                                 // Diminuir o código abreviando o QuerySelector pra uma let
 const qsa = (obj)=>document.querySelectorAll(obj)
 
 // Informações do Menu de Tamanhos e Quantidades
@@ -59,27 +59,34 @@ qsa('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item)=>
     item.addEventListener('click', closeMenuQT)                                            // Se adiciona o evento de clique, onde executa a função closeMenuQT
 })
 
-qs('.pizzaInfo--qtmenos').addEventListener('click', ()=>{
-    if (pizzaQnt > 1) {
+qs('.pizzaInfo--qtmenos').addEventListener('click', ()=>{                     // Evento de clique ao botao de menos
+    if (pizzaQnt > 1) {                                                       // Verificador pra nao descer abaixo de um
         pizzaQnt--
         qs('.pizzaInfo--qt').innerHTML = pizzaQnt
     }
 })
 
-qs('.pizzaInfo--qtmais').addEventListener('click', ()=>{
+qs('.pizzaInfo--qtmais').addEventListener('click', ()=>{                      // Evento de clique ao botao de mais
     pizzaQnt++
     qs('.pizzaInfo--qt').innerHTML = pizzaQnt
 })
 
-qsa('.pizzaInfo--size').forEach((size) => {
-    size.addEventListener('click', (e)=>{
-        qs('.pizzaInfo--size.selected').classList.remove('selected')
-        size.classList.add('selected')
+qsa('.pizzaInfo--size').forEach((size) => {                                   // Função aplicada com forEach por causa dos 3 sizes
+    size.addEventListener('click', ()=>{                                      // Evento de clique nos tamanhos
+        qs('.pizzaInfo--size.selected').classList.remove('selected')          // Remoção do selected anterior
+        size.classList.add('selected')                                        // Adição do selected no atual
     })
 })
 
-qs('.pizzaInfo--addButton').addEventListener('click', ()=>{
-    // Qual pizza?           console.log(pizzaKey)
-    // Qual o tamanho?       let pizzaSize = parseInt(qs('.pizzaInfo--size.selected').getAttribute('data-key'))
-    // Qual a quantidade?    console.log(pizzaQnt)
+qs('.pizzaInfo--addButton').addEventListener('click', ()=>{                   // Função de adição da pizza ao carrinho
+
+    let pizzaSize = parseInt(qs('.pizzaInfo--size.selected').getAttribute('data-key'))     // Pegando o atributo data-key do size selecionado e botando em número
+
+    carrinho.push({                                                           // Adição das informações ao objeto carrinho
+        id: pizzaJson[pizzaKey].id,
+        size: pizzaSize,
+        qnt: pizzaQnt
+    })
+
+    closeMenuQT()                                                             
 })
