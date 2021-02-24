@@ -95,7 +95,41 @@ qs('.pizzaInfo--addButton').addEventListener('click', ()=>{                   //
             qnt: pizzaQnt
         })
     }
-
-
+    carrinhoUpdate()
     closeMenuQT()                                                             
 })
+
+function carrinhoUpdate(){                                                    // Função que ira atualizar o carrinho a cada pizza adicionada
+    if(carrinho.length > 0) {
+        qs('aside').classList.add('show')                                     // Css element para mostrar o aside
+        qs('.cart').innerHTML = ''
+        for(let i in carrinho) {
+            let pizzaItem = pizzaJson.find((item)=> item.id == carrinho[i].id)
+            let cartItem = qs('.models .cart--item').cloneNode(true)
+
+            let pizzaNameSize
+            switch (carrinho[i].size) {
+                case 0:
+                    pizzaNameSize = 'P'
+                    break
+            
+                case 1:
+                    pizzaNameSize = 'M'
+                    break
+
+                case 2:
+                    pizzaNameSize = 'G'
+                    break
+            }
+
+            let pizzaName = `${pizzaItem.name} (${pizzaNameSize})`
+
+            cartItem.querySelector('img').setAttribute('src', pizzaItem.img)
+            cartItem.querySelector('.cart--item-nome').innerHTML = pizzaName
+            cartItem.querySelector('.cart--item--qt').innerHTML = carrinho[i].qnt
+            qs('.cart').append(cartItem)
+        }
+    } else {
+        qs('aside').classList.remove('show')
+    }
+}
