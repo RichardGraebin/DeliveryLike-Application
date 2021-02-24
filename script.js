@@ -95,20 +95,29 @@ qs('.pizzaInfo--addButton').addEventListener('click', ()=>{                   //
             qnt: pizzaQnt
         })
     }
-    carrinhoUpdate()
+    carrinhoUpdate()                                                          // Atualiza o carrinho a cada pizza adicionada
     closeMenuQT()                                                             
 })
 
 function carrinhoUpdate(){                                                    // Função que ira atualizar o carrinho a cada pizza adicionada
     if(carrinho.length > 0) {
+
         qs('aside').classList.add('show')                                     // Css element para mostrar o aside
         qs('.cart').innerHTML = ''
+
+        let subtotal = 0
+        let total = 0
+        let desconto = 0
+
         for(let i in carrinho) {
+
+
             let pizzaItem = pizzaJson.find((item)=> item.id == carrinho[i].id)
             let cartItem = qs('.models .cart--item').cloneNode(true)
+            const cI = (obj)=>cartItem.querySelector(obj)                     // Diminui o código de qs do cartItem
 
             let pizzaNameSize
-            switch (carrinho[i].size) {
+            switch (carrinho[i].size) {                                       // Define o tamanho que ira aparecer no cartName
                 case 0:
                     pizzaNameSize = 'P'
                     break
@@ -123,12 +132,32 @@ function carrinhoUpdate(){                                                    //
             }
 
             let pizzaName = `${pizzaItem.name} (${pizzaNameSize})`
+            
+            cI('img').setAttribute('src', pizzaItem.img)                      // Adiciona as informações de cada pizza no carrinho
+            cI('.cart--item-nome').innerHTML = pizzaName
+            cI('.cart--item--qt').innerHTML = carrinho[i].qnt
+            cI('.cart--item-qtmenos').addEventListener('click', ()=>{
+                if(carrinho[i].qnt > 1) {
+                    carrinho[i].qnt-- 
+                } else {
+                    carrinho.splice(i, 1)
+                }
+                carrinhoUpdate()
+            })
+            cI('.cart--item-qtmais').addEventListener('click', ()=>{
+                carrinho[i].qnt++
+                carrinhoUpdate()
+            })
 
-            cartItem.querySelector('img').setAttribute('src', pizzaItem.img)
-            cartItem.querySelector('.cart--item-nome').innerHTML = pizzaName
-            cartItem.querySelector('.cart--item--qt').innerHTML = carrinho[i].qnt
+
             qs('.cart').append(cartItem)
         }
+
+        desconto = subtotal * 0.1
+        total = subtotal - desconto
+
+        
+
     } else {
         qs('aside').classList.remove('show')
     }
