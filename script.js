@@ -82,11 +82,20 @@ qs('.pizzaInfo--addButton').addEventListener('click', ()=>{                   //
 
     let pizzaSize = parseInt(qs('.pizzaInfo--size.selected').getAttribute('data-key'))     // Pegando o atributo data-key do size selecionado e botando em número
 
-    carrinho.push({                                                           // Adição das informações ao objeto carrinho
-        id: pizzaJson[pizzaKey].id,
-        size: pizzaSize,
-        qnt: pizzaQnt
-    })
+    let identifier = `${pizzaJson[pizzaKey].id}@${pizzaSize}`                              // Cria um identificador para não se repetir pizzas iguais
+    let identifierKey = carrinho.findIndex((item)=> item.identifier == identifier)         // Cria a chave do identificador que verifica se ele ja existe no carrinho
+
+    if(identifierKey != -1) {                                                 // Caso a chave de ident seja igual a uma ja existente, apenas a quantidade é somada
+        carrinho[identifierKey].qnt += pizzaQnt
+    } else {
+        carrinho.push({                                                       // Caso contrário, a pizza é adicionada normalmente ao carrinho
+            identifier: identifier,
+            id: pizzaJson[pizzaKey].id,
+            size: pizzaSize,
+            qnt: pizzaQnt
+        })
+    }
+
 
     closeMenuQT()                                                             
 })
