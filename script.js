@@ -99,7 +99,20 @@ qs('.pizzaInfo--addButton').addEventListener('click', ()=>{                   //
     closeMenuQT()                                                             
 })
 
+qs('.menu-openner').addEventListener('click', ()=>{                           // Evento de abertuda do carrinho mobile
+    if(carrinho.length > 0) {
+        qs('aside').style.left = '0px'
+    }
+})
+
+qs('.menu-closer').addEventListener('click', ()=>{                            // Evento de fechamento do carrinho mobile
+    qs('aside').style.left = '100vw'
+})
+
 function carrinhoUpdate(){                                                    // Função que ira atualizar o carrinho a cada pizza adicionada
+
+    qs('.menu-openner span').innerHTML = carrinho.length
+
     if(carrinho.length > 0) {
 
         qs('aside').classList.add('show')                                     // Css element para mostrar o aside
@@ -113,6 +126,9 @@ function carrinhoUpdate(){                                                    //
 
 
             let pizzaItem = pizzaJson.find((item)=> item.id == carrinho[i].id)
+            subtotal += pizzaItem.price * carrinho[i].qnt
+
+
             let cartItem = qs('.models .cart--item').cloneNode(true)
             const cI = (obj)=>cartItem.querySelector(obj)                     // Diminui o código de qs do cartItem
 
@@ -136,29 +152,36 @@ function carrinhoUpdate(){                                                    //
             cI('img').setAttribute('src', pizzaItem.img)                      // Adiciona as informações de cada pizza no carrinho
             cI('.cart--item-nome').innerHTML = pizzaName
             cI('.cart--item--qt').innerHTML = carrinho[i].qnt
-            cI('.cart--item-qtmenos').addEventListener('click', ()=>{
+            cI('.cart--item-qtmenos').addEventListener('click', ()=>{         // Evento de diminuir a quantidade de pizzas diretamente do carrinho
                 if(carrinho[i].qnt > 1) {
                     carrinho[i].qnt-- 
                 } else {
-                    carrinho.splice(i, 1)
+                    carrinho.splice(i, 1)                                     // Remoção da pizza caso a quantidade chegue a zero
                 }
                 carrinhoUpdate()
             })
-            cI('.cart--item-qtmais').addEventListener('click', ()=>{
+            cI('.cart--item-qtmais').addEventListener('click', ()=>{          // Evento de adição de pizzas
                 carrinho[i].qnt++
                 carrinhoUpdate()
             })
 
 
-            qs('.cart').append(cartItem)
+            qs('.cart').append(cartItem)                                      // Adição total das informações ao site
         }
 
         desconto = subtotal * 0.1
         total = subtotal - desconto
 
-        
+        qs('.subtotal span:last-child').innerHTML = `R$ ${subtotal.toFixed(2)}`         // Adição das informações de preço ao carrinho
+        qs('.total span:last-child').innerHTML = `R$ ${total.toFixed(2)}`
+        qs('.desconto span:last-child').innerHTML = `R$ ${desconto.toFixed(2)}`
 
     } else {
-        qs('aside').classList.remove('show')
+        qs('aside').classList.remove('show')                                  // Remoção do carrinho caso acabem as pizzas
+        qs('aside').style.left = '100vw'
     }
 }
+
+qs('.cart--finalizar').addEventListener('click', ()=>{                        // Alerta do botao de finalizar
+    window.alert('Favor redirecionar-se ao site de pagamento.')
+})
